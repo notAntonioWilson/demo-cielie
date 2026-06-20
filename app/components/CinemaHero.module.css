@@ -10,30 +10,41 @@
   background: var(--ink);
 }
 
-/* TWIRL STAGE */
+/* GOWN STAGE */
 .stage {
   position: absolute;
   inset: 0;
-  will-change: transform, opacity;
+  will-change: opacity;
 }
-.video,
-.posterFallback {
+.gown {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: -4%;
+  will-change: transform;
+  transform-origin: center 60%;
 }
-.video {
-  object-fit: cover;
-  object-position: center 28%;
-  z-index: 1;
-}
-.posterFallback { z-index: 0; }
-.posterFallback img {
+.gown img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 28%;
+  object-position: center 26%;
+}
+.sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 246, 224, 0.18) 45%,
+    rgba(255, 246, 224, 0.28) 50%,
+    rgba(255, 246, 224, 0.18) 55%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  will-change: transform;
 }
 .vignette {
   position: absolute;
