@@ -30,6 +30,10 @@ export const HERO_IMG = CDN + "/hf_20260620_224325_aa39b81b-a574-4e43-ae40-36e7c
 export const SEASONAL_IMG = CDN + "/hf_20260620_224350_d7e58c67-4140-4b88-9b47-2093c7493753.png";
 export const FABRIC_IMG = CDN + "/hf_20260620_224355_eca7346d-e000-4cfd-a6d4-b1ad7a202da1.png";
 
+// Twirl hero video. Temporary placeholder until the fresh Sonila twirl renders;
+// swap this URL for the new one when ready.
+export const TWIRL_VIDEO = CDN + "/hf_20260620_003808_ceb2d4ab-6c44-415e-8ebd-b4cf5751ca8d.mp4";
+
 export const products: Product[] = [
   {
     slug: "sonila-strapless-maxi",

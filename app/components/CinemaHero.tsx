@@ -2,14 +2,29 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { products, HERO_IMG } from "@/lib/products";
+import { products, HERO_IMG, TWIRL_VIDEO } from "@/lib/products";
 import SmartImage from "./SmartImage";
 import styles from "./CinemaHero.module.css";
 
 export default function CinemaHero() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [p, setP] = useState(0); // 0..1 scroll progress through the pinned scene
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [p, setP] = useState(0);
+  const [ready, setReady] = useState(false);
+  const durationRef = useRef(0);
   const hero = products[0];
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const onMeta = () => {
+      durationRef.current = v.duration || 0;
+      setReady(true);
+    };
+    v.addEventListener("loadedmetadata", onMeta);
+    if (v.readyState >= 1) onMeta();
+    return () => v.removeEventListener("loadedmetadata", onMeta);
+  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -21,7 +36,18 @@ export default function CinemaHero() {
         const rect = el.getBoundingClientRect();
         const total = el.offsetHeight - window.innerHeight;
         const scrolled = Math.min(Math.max(-rect.top, 0), total);
-        setP(total > 0 ? scrolled / total : 0);
+        const prog = total > 0 ? scrolled / total : 0;
+        setP(prog);
+
+        const v = videoRef.current;
+        const dur = durationRef.current;
+        if (v && dur) {
+          const vp = Math.min(prog / 0.7, 1);
+          const t = vp * (dur - 0.05);
+          if (Math.abs(v.currentTime - t) > 0.02) {
+            try { v.currentTime = t; } catch {}
+          }
+        }
       });
     };
     onScroll();
@@ -32,68 +58,73 @@ export default function CinemaHero() {
       window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [ready]);
 
-  // Scene choreography derived from scroll progress.
-  const imgScale = 1.18 - p * 0.18; // settles from zoomed-in to framed
-  const vignette = 0.55 - p * 0.3; // room brightens as you descend
-  const introOpacity = Math.max(0, 1 - p * 2.2); // opening title fades early
-  const cardOpacity = Math.max(0, Math.min(1, (p - 0.45) * 2.6)); // bestseller rises in
-  const cardY = 40 - cardOpacity * 40;
+  const stageScale = 1.05 - p * 0.1;
+  const stageOpacity = Math.max(0, 1 - Math.max(0, p - 0.7) * 3.3);
+  const sideOpacity = Math.max(0, 1 - p * 1.8);
+  const sideY = -p * 50;
+  const enterOpacity = Math.max(0, Math.min(1, (p - 0.78) * 4));
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
       <div className={styles.sticky}>
         <div
-          className={styles.scene}
-          style={{ transform: `scale(${imgScale})` }}
+          className={styles.stage}
+          style={{ opacity: stageOpacity, transform: `scale(${stageScale})` }}
         >
-          <SmartImage src={HERO_IMG} alt="CIÉLIE gown in a Viennese salon" />
-          <div
-            className={styles.vignette}
-            style={{ opacity: vignette }}
+          <video
+            ref={videoRef}
+            className={styles.video}
+            src={TWIRL_VIDEO}
+            poster={HERO_IMG}
+            muted
+            playsInline
+            preload="auto"
           />
+          <div className={styles.posterFallback}>
+            <SmartImage src={HERO_IMG} alt="CIELIE gown" />
+          </div>
+          <div className={styles.vignette} />
         </div>
 
-        {/* OPENING TITLE */}
         <div
-          className={styles.intro}
-          style={{ opacity: introOpacity, transform: `translateY(${-p * 60}px)` }}
+          className={styles.left}
+          style={{ opacity: sideOpacity, transform: "translateY(" + sideY + "px)" }}
         >
           <p className={styles.eyebrow}>Vienna · Maison de Couture</p>
           <h1 className={styles.title}>
             Made to be
             <span className={styles.titleItalic}>remembered</span>
           </h1>
-          <div className={styles.scrollHint}>
-            <span>Enter the atelier</span>
-            <span className={styles.scrollLine} />
-          </div>
+          <p className={styles.lede}>
+            Evening gowns cut by hand for the moments that deserve one.
+          </p>
         </div>
 
-        {/* BESTSELLER REVEAL */}
         <div
-          className={styles.feature}
-          style={{
-            opacity: cardOpacity,
-            transform: `translateY(${cardY}px)`,
-            pointerEvents: cardOpacity > 0.5 ? "auto" : "none",
-          }}
+          className={styles.right}
+          style={{ opacity: sideOpacity, transform: "translateY(" + sideY + "px)" }}
         >
-          <div className={styles.featureInner}>
-            <span className={styles.featureBadge}>The Bestseller</span>
-            <h2 className={styles.featureName}>{hero.name}</h2>
-            <p className={styles.featureLine}>{hero.line}</p>
-            <p className={styles.featurePrice}>${hero.price}</p>
-            <p className={styles.featureDesc}>{hero.shortDescription}</p>
-            <Link href={`/products/${hero.slug}`} className={styles.featureCta}>
-              Shop the Sonila
-            </Link>
-            <div className={styles.featureMeta}>
-              <span>★★★★★</span>
-              <span>{hero.rating} · {hero.reviewCount} reviews</span>
-            </div>
+          <span className={styles.rBadge}>The Bestseller</span>
+          <h2 className={styles.rName}>{hero.name}</h2>
+          <p className={styles.rLine}>{hero.line}</p>
+          <p className={styles.rPrice}>${hero.price}</p>
+          <div className={styles.rStars}>
+            ★★★★★ <span>{hero.reviewCount} reviews</span>
           </div>
+          <Link href={"/products/" + hero.slug} className={styles.rCta}>
+            Shop the {hero.name}
+          </Link>
+        </div>
+
+        <div className={styles.hint} style={{ opacity: Math.max(0, 1 - p * 4) }}>
+          <span>Scroll to enter</span>
+          <span className={styles.hintLine} />
+        </div>
+
+        <div className={styles.enter} style={{ opacity: enterOpacity }}>
+          <span>The Collection</span>
         </div>
       </div>
     </div>
