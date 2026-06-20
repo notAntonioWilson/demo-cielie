@@ -1,0 +1,128 @@
+.announce {
+  background: var(--ink);
+  color: var(--ivory);
+  overflow: hidden;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.announceTrack {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  white-space: nowrap;
+  padding: 0.6rem 0;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold-soft);
+  flex: none;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+.header.solid {
+  background: rgba(251, 249, 244, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 1.1rem var(--gut);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.navLeft {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.navLeft a:hover { color: var(--gold); }
+.navRight {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+.iconBtn {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.iconBtn:hover { color: var(--gold); }
+.badge {
+  background: var(--gold);
+  color: var(--ivory);
+  font-size: 0.62rem;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  letter-spacing: 0;
+}
+.logo {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  font-weight: 500;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  width: 26px;
+}
+.burger span {
+  height: 1.4px;
+  background: var(--ink);
+  width: 100%;
+  transition: 0.3s;
+}
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .navLeft { display: none; }
+  .burger { display: flex; }
+  .inner { padding: 0.9rem var(--gut); }
+  .logo { font-size: 1.4rem; }
+  .iconBtn { font-size: 0.7rem; }
+  .navRight { gap: 1rem; }
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.5rem var(--gut) 2rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--serif);
+    font-size: 1.4rem;
+  }
+  .mobileMenu a:hover { color: var(--gold); }
+}
