@@ -3,7 +3,7 @@
   background: var(--ink);
   color: var(--ivory);
   text-align: center;
-  padding: clamp(4rem, 10vw, 7rem) var(--gut);
+  padding: clamp(3rem, 6vw, 4.5rem) var(--gut);
 }
 .statementText {
   font-family: var(--serif);
@@ -33,7 +33,7 @@
 }
 
 /* COLLECTION */
-.collection { padding: clamp(4rem, 9vw, 7rem) 0; }
+.collection { padding: clamp(3rem, 6vw, 5rem) 0; }
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -44,21 +44,20 @@
 .seasonal {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  min-height: 80vh;
   align-items: stretch;
 }
 .seasonalImg { position: relative; overflow: hidden; }
 .seasonalImg img {
   width: 100%; height: 100%;
   object-fit: cover;
-  min-height: 60vh;
+  min-height: 480px;
 }
 .seasonalText {
   background: var(--ivory);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(2.5rem, 6vw, 6rem);
+  padding: clamp(2.2rem, 4vw, 4rem);
 }
 .seasonalTitle {
   font-family: var(--serif);
@@ -87,7 +86,7 @@
 .seasonalCta:hover { background: var(--gold); }
 
 /* ATELIER */
-.atelier { background: var(--paper); padding: clamp(4rem, 9vw, 7rem) 0; }
+.atelier { background: var(--paper); padding: clamp(3rem, 6vw, 5rem) 0; }
 .atelierHead { max-width: 50ch; margin-bottom: 3.5rem; }
 .steps {
   display: grid;
@@ -108,7 +107,6 @@
 .fabric {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
-  min-height: 70vh;
   align-items: stretch;
 }
 .fabricText {
@@ -117,7 +115,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(2.5rem, 6vw, 6rem);
+  padding: clamp(2.2rem, 4vw, 4rem);
 }
 .fabricText .eyebrow { color: var(--gold-soft); }
 .fabricTitle {
@@ -129,10 +127,10 @@
 }
 .fabricBody { color: #cfc8bb; line-height: 1.8; max-width: 44ch; }
 .fabricImg { position: relative; overflow: hidden; }
-.fabricImg img { width: 100%; height: 100%; object-fit: cover; min-height: 50vh; }
+.fabricImg img { width: 100%; height: 100%; object-fit: cover; min-height: 480px; }
 
 /* REVIEWS */
-.reviews { padding: clamp(4rem, 9vw, 7rem) 0; }
+.reviews { padding: clamp(3rem, 6vw, 5rem) 0; }
 .revHead { text-align: center; margin-bottom: 3rem; }
 .stars { color: var(--gold); font-size: 1.2rem; letter-spacing: 0.2em; }
 .revCount {
@@ -163,7 +161,7 @@
   background: var(--ink);
   color: var(--ivory);
   text-align: center;
-  padding: clamp(5rem, 12vw, 9rem) var(--gut);
+  padding: clamp(3.5rem, 7vw, 5.5rem) var(--gut);
 }
 .closingTitle {
   font-family: var(--serif);

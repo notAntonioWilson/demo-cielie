@@ -153,3 +153,25 @@ export const products: Product[] = [
 export function getProduct(slug: string) {
   return products.find((p) => p.slug === slug);
 }
+
+// Extended display catalog for the Gowns carousel ("the dressing room").
+// Built from the demo's generated imagery and colour story so the rotating
+// rail feels like a full collection. Each links back to a real product page.
+export type GownCard = {
+  name: string;
+  colour: string;
+  price: number;
+  img: string;
+  slug: string;
+};
+
+export const gownsCatalog: GownCard[] = [
+  { name: "Sonila", colour: "Marigold", price: 238, img: products[0].images[0], slug: "sonila-strapless-maxi" },
+  { name: "Sarelle", colour: "Baby Blue", price: 198, img: products[1].images[0], slug: "sarelle-pleated-maxi" },
+  { name: "Walley", colour: "Powder Blue", price: 188, img: products[2].images[0], slug: "walley-off-shoulder" },
+  { name: "Aurelle", colour: "Champagne", price: 226, img: SEASONAL_IMG, slug: "sonila-strapless-maxi" },
+  { name: "Liora", colour: "Blush", price: 212, img: FABRIC_IMG, slug: "sarelle-pleated-maxi" },
+  { name: "Sonila", colour: "Ivory", price: 238, img: HERO_IMG, slug: "sonila-strapless-maxi" },
+  { name: "Mirelle", colour: "Sage", price: 204, img: products[1].images[0], slug: "sarelle-pleated-maxi" },
+  { name: "Vesna", colour: "Slate", price: 188, img: products[2].images[0], slug: "walley-off-shoulder" },
+];

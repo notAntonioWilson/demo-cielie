@@ -47,7 +47,7 @@ export default function Header() {
 
           <nav className={styles.navLeft} aria-label="Primary">
             <Link href="/">New In</Link>
-            <Link href="/#bestsellers">Gowns</Link>
+            <Link href="/gowns">Gowns</Link>
             <Link href="/#atelier">Atelier</Link>
           </nav>
 
@@ -72,7 +72,7 @@ export default function Header() {
         {menuOpen && (
           <div className={styles.mobileMenu}>
             <Link href="/" onClick={() => setMenuOpen(false)}>New In</Link>
-            <Link href="/#bestsellers" onClick={() => setMenuOpen(false)}>Gowns</Link>
+            <Link href="/gowns" onClick={() => setMenuOpen(false)}>Gowns</Link>
             <Link href="/#atelier" onClick={() => setMenuOpen(false)}>Atelier</Link>
           </div>
         )}
