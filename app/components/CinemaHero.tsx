@@ -38,11 +38,10 @@ export default function CinemaHero() {
   const e = ease(Math.min(p, 1));
 
   const gownScale = 1 + e * 0.14;
-  const gownOpacity = Math.max(0, 1 - Math.max(0, p - 0.6) * 3.2);
+  const gownOpacity = Math.max(0.15, 1 - Math.max(0, p - 0.45) * 1.6);
   const sideOpacity = Math.max(0, 1 - p * 1.9);
   const leftX = -p * 55;
   const rightX = p * 55;
-  const enterOpacity = Math.max(0, Math.min(1, (p - 0.72) * 4));
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
@@ -92,9 +91,6 @@ export default function CinemaHero() {
           <span className={styles.hintLine} />
         </div>
 
-        <div className={styles.enter} style={{ opacity: enterOpacity }}>
-          <span>The Collection</span>
-        </div>
       </div>
     </div>
   );
