@@ -34,15 +34,36 @@ export default function GownsCarousel() {
       down = false;
       setPaused(false);
     };
+    // vertical wheel scrolls the rail horizontally
+    const onWheel = (e: WheelEvent) => {
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta !== 0) {
+        el.scrollLeft += delta;
+        setPaused(true);
+        clearTimeout((el as any)._wheelT);
+        (el as any)._wheelT = setTimeout(() => setPaused(false), 600);
+        e.preventDefault();
+      }
+    };
     el.addEventListener("pointerdown", onDown);
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerup", onUp);
+    el.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       el.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
+      el.removeEventListener("wheel", onWheel);
     };
   }, []);
+
+  const nudge = (dir: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    setPaused(true);
+    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.7, 600), behavior: "smooth" });
+    setTimeout(() => setPaused(false), 900);
+  };
 
   return (
     <div className={styles.page}>
@@ -62,6 +83,20 @@ export default function GownsCarousel() {
       >
         <div className={styles.fadeLeft} />
         <div className={styles.fadeRight} />
+        <button
+          className={`${styles.arrow} ${styles.arrowLeft}`}
+          onClick={() => nudge(-1)}
+          aria-label="Previous gowns"
+        >
+          ‹
+        </button>
+        <button
+          className={`${styles.arrow} ${styles.arrowRight}`}
+          onClick={() => nudge(1)}
+          aria-label="Next gowns"
+        >
+          ›
+        </button>
         <div
           ref={trackRef}
           className={`${styles.track} ${paused ? styles.paused : ""}`}
@@ -90,7 +125,7 @@ export default function GownsCarousel() {
       </div>
 
       <div className={styles.footNote}>
-        <span>{gownsCatalog.length} styles · made to order in Vienna</span>
+        <span>{gownsCatalog.length} styles · scroll, drag, or use the arrows</span>
         <Link href="/#bestsellers" className={styles.allLink}>
           Shop the Edit
         </Link>

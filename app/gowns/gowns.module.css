@@ -48,6 +48,38 @@
   background: linear-gradient(to left, var(--paper), transparent);
 }
 
+/* SCROLL ARROWS */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background 0.3s, color 0.3s, transform 0.3s;
+  box-shadow: 0 6px 24px rgba(28, 26, 24, 0.1);
+}
+.arrow:hover {
+  background: var(--ink);
+  color: var(--ivory);
+}
+.arrowLeft { left: clamp(0.5rem, 2vw, 1.5rem); }
+.arrowRight { right: clamp(0.5rem, 2vw, 1.5rem); }
+.arrow:hover.arrowLeft { transform: translateY(-50%) translateX(-2px); }
+.arrow:hover.arrowRight { transform: translateY(-50%) translateX(2px); }
+@media (max-width: 600px) {
+  .arrow { width: 42px; height: 42px; font-size: 1.4rem; }
+}
+
 .track {
   display: flex;
   gap: clamp(1rem, 2vw, 1.8rem);

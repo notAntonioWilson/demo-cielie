@@ -4,6 +4,7 @@ import ProductCard from "./components/ProductCard";
 import SmartImage from "./components/SmartImage";
 import CinemaHero from "./components/CinemaHero";
 import Reveal from "./components/Reveal";
+import Parallax from "./components/Parallax";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -47,7 +48,9 @@ export default function Home() {
       {/* SEASONAL EDITORIAL SPLIT */}
       <section className={styles.seasonal}>
         <div className={styles.seasonalImg}>
-          <SmartImage src={SEASONAL_IMG} alt="CIÉLIE wedding season editorial" />
+          <Parallax speed={0.14} className={styles.parallaxInner}>
+            <SmartImage src={SEASONAL_IMG} alt="CIÉLIE wedding season editorial" />
+          </Parallax>
         </div>
         <div className={styles.seasonalText}>
           <Reveal>
@@ -112,7 +115,9 @@ export default function Home() {
           </Reveal>
         </div>
         <div className={styles.fabricImg}>
-          <SmartImage src={FABRIC_IMG} alt="CIÉLIE couture fabric detail" />
+          <Parallax speed={0.14} className={styles.parallaxInner}>
+            <SmartImage src={FABRIC_IMG} alt="CIÉLIE couture fabric detail" />
+          </Parallax>
         </div>
       </section>
 
