@@ -10,22 +10,19 @@
   background: var(--ink);
 }
 
-/* WEBGL GOWN STAGE */
+/* GOWN STAGE */
 .stage {
   position: absolute;
-  inset: -2%;
+  inset: 0;
+  will-change: opacity;
+}
+.gown {
+  position: absolute;
+  inset: -3%;
   will-change: transform;
+  transform-origin: center 55%;
 }
-.stage :global(.fluidCanvas) {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.stage :global(.fluidFallback) {
-  position: absolute;
-  inset: 0;
+.gown img {
   width: 100%;
   height: 100%;
   object-fit: cover;

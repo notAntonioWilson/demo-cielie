@@ -4,8 +4,7 @@ import { CartProvider } from "./components/CartContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CartDrawer from "./components/CartDrawer";
-import SmoothScroll from "./components/SmoothScroll";
-import Cursor from "./components/Cursor";
+import Intro from "./components/Intro";
 
 export const metadata: Metadata = {
   title: "CIÉLIE | Luxury Occasionwear, Made in Vienna",
@@ -34,14 +33,11 @@ export default function RootLayout({
       </head>
       <body>
         <CartProvider>
-          <Cursor />
-          <SmoothScroll />
+          <Intro />
           <Header />
           <CartDrawer />
-          <div id="smooth-root">
-            <main>{children}</main>
-            <Footer />
-          </div>
+          <main>{children}</main>
+          <Footer />
         </CartProvider>
       </body>
     </html>

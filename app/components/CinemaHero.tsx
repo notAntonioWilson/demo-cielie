@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { products, HERO_IMG } from "@/lib/products";
-import FluidGown from "./FluidGown";
+import SmartImage from "./SmartImage";
 import styles from "./CinemaHero.module.css";
 
 export default function CinemaHero() {
@@ -37,20 +37,23 @@ export default function CinemaHero() {
   const ease = (x: number) => 1 - Math.pow(1 - x, 3);
   const e = ease(Math.min(p, 1));
 
+  const gownScale = 1 + e * 0.14;
+  const gownOpacity = Math.max(0, 1 - Math.max(0, p - 0.6) * 3.2);
   const sideOpacity = Math.max(0, 1 - p * 1.9);
-  const leftX = -p * 60;
-  const rightX = p * 60;
+  const leftX = -p * 55;
+  const rightX = p * 55;
   const enterOpacity = Math.max(0, Math.min(1, (p - 0.72) * 4));
-  const stageScale = 1 + e * 0.12;
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
       <div className={styles.sticky}>
-        <div
-          className={styles.stage}
-          style={{ transform: `scale(${stageScale})` }}
-        >
-          <FluidGown src={HERO_IMG} progress={p} />
+        <div className={styles.stage} style={{ opacity: gownOpacity }}>
+          <div
+            className={styles.gown}
+            style={{ transform: `scale(${gownScale})` }}
+          >
+            <SmartImage src={HERO_IMG} alt="CIELIE gown" />
+          </div>
           <div className={styles.vignette} />
         </div>
 
@@ -85,7 +88,7 @@ export default function CinemaHero() {
         </div>
 
         <div className={styles.hint} style={{ opacity: Math.max(0, 1 - p * 4) }}>
-          <span>Move your cursor · scroll to enter</span>
+          <span>Scroll to enter</span>
           <span className={styles.hintLine} />
         </div>
 
