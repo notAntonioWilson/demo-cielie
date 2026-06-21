@@ -95,3 +95,48 @@ button {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
+
+/* ===== Custom cursor (desktop only) ===== */
+.cursorDot,
+.cursorRing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursorDot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #fff;
+}
+.cursorRing {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease,
+    background 0.3s ease;
+}
+.cursorRingHover {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(255, 255, 255, 0.12);
+}
+@media (pointer: coarse) {
+  .cursorDot, .cursorRing { display: none; }
+}
+body.hasCustomCursor { cursor: none; }
+body.hasCustomCursor a,
+body.hasCustomCursor button { cursor: none; }
+
+/* smooth-scroll content wrapper */
+#smooth-root { will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  #smooth-root { transform: none !important; }
+}

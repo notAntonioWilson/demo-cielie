@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { products, HERO_IMG } from "@/lib/products";
-import SmartImage from "./SmartImage";
+import FluidGown from "./FluidGown";
 import styles from "./CinemaHero.module.css";
 
 export default function CinemaHero() {
@@ -34,50 +34,33 @@ export default function CinemaHero() {
     };
   }, []);
 
-  // Eased scroll choreography (smooth, GPU transforms only — no decode stutter)
   const ease = (x: number) => 1 - Math.pow(1 - x, 3);
   const e = ease(Math.min(p, 1));
 
-  // The gown: drifts up, gently rotates, scales, then dissolves into the store
-  const gownScale = 1.0 + e * 0.16;
-  const gownRotate = (0.5 - p) * 8; // subtle turn through the scroll
-  const gownY = -e * 8;
-  const gownOpacity = Math.max(0, 1 - Math.max(0, p - 0.62) * 3.2);
-  const sweepX = -120 + e * 320; // light sweep across the gown
-
-  // Flanking content
   const sideOpacity = Math.max(0, 1 - p * 1.9);
-  const sideY = -p * 46;
+  const leftX = -p * 60;
+  const rightX = p * 60;
   const enterOpacity = Math.max(0, Math.min(1, (p - 0.72) * 4));
+  const stageScale = 1 + e * 0.12;
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
       <div className={styles.sticky}>
-        {/* GOWN STAGE */}
-        <div className={styles.stage} style={{ opacity: gownOpacity }}>
-          <div
-            className={styles.gown}
-            style={{
-              transform: `translateY(${gownY}vh) scale(${gownScale}) rotate(${gownRotate}deg)`,
-            }}
-          >
-            <SmartImage src={HERO_IMG} alt="CIELIE gown" />
-            <div
-              className={styles.sweep}
-              style={{ transform: `translateX(${sweepX}%)` }}
-            />
-          </div>
+        <div
+          className={styles.stage}
+          style={{ transform: `scale(${stageScale})` }}
+        >
+          <FluidGown src={HERO_IMG} progress={p} />
           <div className={styles.vignette} />
         </div>
 
-        {/* LEFT TEXT */}
         <div
           className={styles.left}
-          style={{ opacity: sideOpacity, transform: `translateY(${sideY}px)` }}
+          style={{ opacity: sideOpacity, transform: `translateX(${leftX}px)` }}
         >
           <p className={styles.eyebrow}>Vienna · Maison de Couture</p>
           <h1 className={styles.title}>
-            Made to be
+            <span className={styles.titleLine}>Made to be</span>
             <span className={styles.titleItalic}>remembered</span>
           </h1>
           <p className={styles.lede}>
@@ -85,10 +68,9 @@ export default function CinemaHero() {
           </p>
         </div>
 
-        {/* RIGHT BESTSELLER */}
         <div
           className={styles.right}
-          style={{ opacity: sideOpacity, transform: `translateY(${sideY}px)` }}
+          style={{ opacity: sideOpacity, transform: `translateX(${rightX}px)` }}
         >
           <span className={styles.rBadge}>The Bestseller</span>
           <h2 className={styles.rName}>{hero.name}</h2>
@@ -102,13 +84,11 @@ export default function CinemaHero() {
           </Link>
         </div>
 
-        {/* SCROLL HINT */}
         <div className={styles.hint} style={{ opacity: Math.max(0, 1 - p * 4) }}>
-          <span>Scroll to enter</span>
+          <span>Move your cursor · scroll to enter</span>
           <span className={styles.hintLine} />
         </div>
 
-        {/* ENTER CUE */}
         <div className={styles.enter} style={{ opacity: enterOpacity }}>
           <span>The Collection</span>
         </div>

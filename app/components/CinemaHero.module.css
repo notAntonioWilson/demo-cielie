@@ -10,49 +10,26 @@
   background: var(--ink);
 }
 
-/* GOWN STAGE */
+/* WEBGL GOWN STAGE */
 .stage {
   position: absolute;
-  inset: 0;
-  will-change: opacity;
-}
-.gown {
-  position: absolute;
-  inset: -4%;
+  inset: -2%;
   will-change: transform;
-  transform-origin: center 60%;
 }
-.gown img {
+.stage :global(.fluidCanvas) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.stage :global(.fluidFallback) {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 26%;
-}
-.sweep {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 45%;
-  pointer-events: none;
-  background: linear-gradient(
-    100deg,
-    transparent 0%,
-    rgba(255, 246, 224, 0.18) 45%,
-    rgba(255, 246, 224, 0.28) 50%,
-    rgba(255, 246, 224, 0.18) 55%,
-    transparent 100%
-  );
-  mix-blend-mode: screen;
-  will-change: transform;
-}
-.vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background:
-    radial-gradient(110% 80% at 50% 40%, transparent 35%, rgba(20,18,16,0.55) 100%),
-    linear-gradient(90deg, rgba(20,18,16,0.55) 0%, transparent 28%, transparent 72%, rgba(20,18,16,0.55) 100%);
 }
 
 /* LEFT TEXT */
@@ -80,6 +57,17 @@
   line-height: 0.95;
   letter-spacing: -0.015em;
   text-shadow: 0 2px 40px rgba(0,0,0,0.45);
+}
+.titleLine {
+  display: block;
+  animation: maskUp 1s cubic-bezier(0.16,1,0.3,1) both;
+}
+.titleItalic {
+  animation: maskUp 1s cubic-bezier(0.16,1,0.3,1) 0.12s both;
+}
+@keyframes maskUp {
+  from { opacity: 0; transform: translateY(0.5em); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .titleItalic {
   display: block;
